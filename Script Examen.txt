@@ -1,0 +1,52 @@
+crear base de datos:
+
+CREATE DATABASE producto
+    WITH 
+    OWNER = postgres
+    ENCODING = 'UTF8'
+    LC_COLLATE = 'Spanish_Spain.1252'
+    LC_CTYPE = 'Spanish_Spain.1252'
+    TABLESPACE = pg_default
+    CONNECTION LIMIT = -1;
+
+tabla compras:
+
+CREATE TABLE public.compras
+(
+    nombre character varying(30) COLLATE pg_catalog."default" NOT NULL,
+    edad integer,
+    sexo character varying(20) COLLATE pg_catalog."default",
+    id_pro integer NOT NULL,
+    fecha character varying(20) COLLATE pg_catalog."default" NOT NULL,
+    CONSTRAINT compras_pkey PRIMARY KEY (nombre),
+    CONSTRAINT fk_prod FOREIGN KEY (id_pro)
+        REFERENCES public.productos (id_prod) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
+WITH (
+    OIDS = FALSE
+)
+TABLESPACE pg_default;
+
+ALTER TABLE public.compras
+    OWNER to postgres;
+
+
+tabla productos:
+
+CREATE TABLE public.productos
+(
+    id_prod integer NOT NULL,
+    nombre_prod character varying(30) COLLATE pg_catalog."default" NOT NULL,
+    precio_prod integer NOT NULL,
+    tipo_prod character varying(20) COLLATE pg_catalog."default" NOT NULL,
+    CONSTRAINT productos_pkey PRIMARY KEY (id_prod)
+)
+WITH (
+    OIDS = FALSE
+)
+TABLESPACE pg_default;
+
+ALTER TABLE public.productos
+    OWNER to postgres;
